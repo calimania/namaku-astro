@@ -25,3 +25,9 @@ pnpm-debug.log*
 .idea/
 
 .bevel
+
+*.gen
+*.gen.*
+
+**/*.min.*
+.tanstack
