@@ -68,15 +68,7 @@ export interface Store {
     Label: string;
     URL: string;
   }[],
-  SEO: {
-    metaDescription: string;
-    metaKeywords: string;
-    metaTitle: string;
-    metaAuthor: string;
-    socialImage?: {
-      url: string;
-    };
-  };
+  SEO: SEO;
 }
 
 
@@ -213,14 +205,14 @@ interface ImageData {
 }
 
 interface SEO {
-  id: number;
-  metaTitle: string;
-  metaDescription: string;
-  metaKeywords: string;
-  metaUrl: string | null;
-  metaAuthor: string | null;
-  excludeFromSearch: boolean;
-  metaDate: string | null;
+  id?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  metaUrl?: string;
+  metaAuthor?: string;
+  excludeFromSearch?: boolean;
+  metaDate?: string;
   socialImage?: ImageData;
 }
 

@@ -5,6 +5,10 @@ export const markketplace = {
   markketplace: import.meta.env.MARKKETPLACE_URL || 'https://dev.markket.place',
   posthog_id: import.meta.env.PUBLIC_POSTHOG_KEY || '',
   url: import.meta.env.PUBLIC_URL || 'https://summit.caliman.org',
+  portal: {
+    slug: import.meta.env.PUBLIC_STORE_SLUG || 'namaku',
+    api: import.meta.env.PUBLIC_STRAPI_URL || 'https://api.markket.place',
+  },
   content: {
     title: 'Markketplace',
     url: 'https://dev.markket.place',

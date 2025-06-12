@@ -1,7 +1,7 @@
 {
-  "name": "summit-astro",
+  "name": "namaku-astro",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "astro dev",
@@ -16,6 +16,9 @@
     "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.14",
+    "@tanstack/react-query": "^5.80.7",
+    "@tanstack/react-router": "^1.121.2",
+    "@tanstack/router-plugin": "^1.121.4",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "astro": "^5.5.2",
@@ -27,6 +30,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.80.7",
+    "@tanstack/react-router-devtools": "^1.121.5",
     "sass-embedded": "^1.86.0"
   }
 }
