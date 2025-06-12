@@ -1,26 +1,9 @@
-## Astro Site for Markkëts
+## Namaku Wellness
 
-[de.markket.place] is an open source platform for simple websites, ecommerce & newsletters
+Client for Rana EHR
 
-This template allows you to build a static site, that is easy to deploy for free
+Wellness markketplace
 
-Easily deploy new versions after tweaking your content in the dashboard, rollback and manage your online presence like a pro
-
-Use this template to get started
-
-The template will fail to deploy if there are build errors, so you can make any changes with confidence
-
-Easily run in your computer, to preview changes & create new extensions
-
-[view demo](http://summit.caliman.org/)
-
-Sign up to [de.markket.place](https://de.markket.place/auth/register) or
-
-[self-host the markket strapi api](https://github.com/calimania/markketplace)
-
-&
-
-[self-host the markket next api](https://github.com/calimania/markketplace-next)
 
 # Astro Starter Kit: Basics
 

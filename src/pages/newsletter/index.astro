@@ -31,15 +31,15 @@ const NewsletterPage = pages.find(
   <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
     <!-- Hero Section -->
     <div class="relative pt-20 pb-16 px-4">
-      <div class="max-w-4xl mx-auto text-center">
+      <div class="max-w-4xl mx-auto">
         <h1
           class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
         >
           {NewsletterPage?.Title || "Newsletter "}
         </h1>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        <div class="text-xl text-gray-600 max-w-2xl mx-auto text-left">
           <PageContent params={{ page: NewsletterPage as any }} />
-        </p>
+        </div>
       </div>
 
       <div class="relative pt-20 pb-16 px-4">
