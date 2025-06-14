@@ -3,7 +3,7 @@ import type { Store } from '../../markket/index.d';
 import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute({
-  component: PortalIndex,
+  component: PortalAbout,
 });
 
 const fetchStore = async () => {
@@ -12,7 +12,7 @@ const fetchStore = async () => {
   return res.json();
 };
 
-function PortalIndex() {
+function PortalAbout() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["store"],
     queryFn: fetchStore,
@@ -27,7 +27,7 @@ function PortalIndex() {
     <div className="flex flex-col items-center justify-center min-h-[60vh]">
       <h1 className="text-3xl font-bold mb-2">{store?.title || "Namaku Wellness"}</h1>
       <p className="text-lg text-gray-600 mb-4">
-        Welcome to your wellness portal. Connect with your therapist or doctor!
+        ABOUT
       </p>
       <img
         src={store?.Logo?.url}
@@ -37,9 +37,8 @@ function PortalIndex() {
       <div className="bg-blue-50 px-4 py-2 rounded text-blue-700">
         {data?.SEO?.metaDescription || "Portal"}
       </div>
-      <div>outlet :D <br /></div>
     </div>
   );
 }
 
-export default PortalIndex;
+export default PortalAbout;

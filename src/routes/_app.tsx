@@ -20,7 +20,7 @@ const queryClient = new QueryClient(
 
 export function Dashboard() {
   return (
-    <div className="min-h-screen py-16 px-4">
+    <div className="min-h-[97vh] py-16 px-4">
       <div className="absolute top-0 left-0 right-0 bg-black/20 backdrop-blur-lg z-50">
         <div className="max-w-6xl px-4 py-4">
           <a
