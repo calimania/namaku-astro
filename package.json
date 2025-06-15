@@ -32,6 +32,7 @@
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.80.7",
     "@tanstack/react-router-devtools": "^1.121.5",
+    "cafecito": "^0.9.0",
     "sass-embedded": "^1.86.0"
   }
 }

@@ -1,9 +1,16 @@
-## Namaku Wellness
+# Namaku Wellness
 
-Client for Rana EHR
+Wellness markketplace, powered by cafecito, Rana & Markket
 
-Wellness markketplace
+Telemedicine, charts, appointments, eforms & more!
 
+### Rana
+
+Rana is a medplum instance with extensions for enhanced safety and simpler clients.
+
+### Markket
+
+Markket is a headless CMS with eCommerce extensions.
 
 # Astro Starter Kit: Basics
 

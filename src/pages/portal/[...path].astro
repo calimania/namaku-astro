@@ -1,10 +1,10 @@
 ---
-import Layout from "../../layouts/Layout.astro"
-import { Dashboard as ReactDashboard } from "../../routes/_app"
-import { type Route } from "@tanstack/react-router"
-import { routeTree } from "../../routes/routeTree.gen.ts"
+import Layout from "../../layouts/Layout.astro";
+import { Dashboard as ReactDashboard } from "../../routes/_app.tsx";
+import { type Route } from "@tanstack/react-router";
+import { routeTree } from "../../routes/routeTree.gen.ts";
 import { getCollection } from "astro:content";
-import type { Store } from '../../markket/index.d';
+import type { Store } from "../../markket/index.d";
 
 const stores = await getCollection("store");
 const store = stores?.[0]?.data as any as Store;
@@ -12,27 +12,27 @@ const store = stores?.[0]?.data as any as Store;
 export async function getStaticPaths() {
   const mapChildren = (route: Route): any => {
     if (!route?.options) {
-      return []
+      return [];
     }
     return [
       route.options,
       ...Object.values(route?.children || []).flatMap((child) =>
         mapChildren(child)
       ),
-    ]
-  }
+    ];
+  };
 
-  const asMapped = mapChildren(routeTree as unknown as Route)
+  const asMapped = mapChildren(routeTree as unknown as Route);
   return asMapped.map((route: { path?: string }) => ({
     params: {
       // splice the prefixed `/dashboard` by the generator
       path: route.path?.split("/")?.splice(2)?.join("/"),
     },
-  }))
+  }));
 }
 ---
 
-<Layout SEO={{ excludeFromSearch: true,  }} store={store}>
+<Layout SEO={{ excludeFromSearch: true }} store={store} portal>
   <main>
     <ReactDashboard client:only="react" />
   </main>
