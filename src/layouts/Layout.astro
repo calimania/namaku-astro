@@ -90,24 +90,6 @@ const icon = {
   <body>
     <slot />
     {!portal && <Footer store={store} page={page} />}
-    {portal && (
-      <footer class="bg-gray-900 text-gray-300">
-        <div class="max-w-7xl px-6 py-3">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Brand Section */}
-            <div class="col-span-2 ">
-              {store?.Favicon?.url && (
-                <a href="/">
-                  <img
-                    src={store?.Favicon?.url}
-                    alt={`${store.title} logo`}
-                    class="h-12"
-                  />
-                </a>
-              )}
-            </div>
-        </footer>
-    )}
   </body>
   <style>
     html,

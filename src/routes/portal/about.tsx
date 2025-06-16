@@ -1,41 +1,35 @@
+// import { useRouteContext } from "@tanstack/react-router";
+// import type { Store } from '../../markket';
 import { markketplace } from "../../config";
-import type { Store } from '../../markket/index.d';
 import { useQuery } from "@tanstack/react-query";
+import PageContent from "../../components/content.blocks";
+import type { Page } from "../../markket";
 
 export const Route = createFileRoute({
   component: PortalAbout,
 });
 
-const fetchStore = async () => {
-  const res = await fetch(new URL(`/api/stores?filters[slug][$eq]=${markketplace.portal.slug}&populate[]=Logo&populate[]=SEO`, markketplace.api));
+const fetchPage = async () => {
+  const res = await fetch(new URL(`/api/pages?filters[slug][$eq]=platform.about&filters[store][slug][$eq]=${markketplace.portal.slug}&populate[]=SEO`, markketplace.api));
   if (!res.ok) throw new Error("Failed to fetch store");
   return res.json();
 };
 
 function PortalAbout() {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["store"],
-    queryFn: fetchStore,
+    queryKey: ["page.platform.about"],
+    queryFn: fetchPage,
   });
 
-  const store = data?.data?.[0] as Store;
-
-  if (isLoading) return <div className="p-8 text-lg">Loading store info…</div>;
-  if (error) return <div className="p-8 text-red-500">Error loading store!</div>;
+  const page = data?.data?.[0] as Page;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh]">
-      <h1 className="text-3xl font-bold mb-2">{store?.title || "Namaku Wellness"}</h1>
-      <p className="text-lg text-gray-600 mb-4">
-        ABOUT
-      </p>
-      <img
-        src={store?.Logo?.url}
-        alt="Store Logo"
-        className="w-24 h-24 rounded-full shadow mb-4"
-      />
-      <div className="bg-blue-50 px-4 py-2 rounded text-blue-700">
-        {data?.SEO?.metaDescription || "Portal"}
+    <div className="flex flex-col justify-center min-h-[60vh]">
+      <h2 className="text-lg text-gray-600 mb-4 text-left">
+        {page?.Title || 'About'}
+      </h2>
+      <div className="bg-blue-50 px-4 py-2 rounded text-blue-700 max-w-[728px]" >
+        <PageContent params={{ page }} />
       </div>
     </div>
   );
