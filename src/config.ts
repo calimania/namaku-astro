@@ -8,6 +8,8 @@ export const markketplace = {
   portal: {
     slug: import.meta.env.PUBLIC_STORE_SLUG || 'namaku',
     api: import.meta.env.PUBLIC_STRAPI_URL || 'https://api.markket.place',
+    rana: import.meta.env.PUBLIC_RANA_API || 'https://ehr.caliman.org/',
+    rest: import.meta.env.PUBLIC_MEDPLUM_URL || 'https://medplumapi.caliman.org/',
   },
   content: {
     title: 'Markketplace',

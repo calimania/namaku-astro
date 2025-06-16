@@ -11,9 +11,10 @@ export interface Props {
   page?: Page;
   store?: Store;
   SEO?: SEO;
+  portal?: boolean;
 }
 
-const { redirect = "", store, page, SEO } = Astro.props;
+const { redirect = "", store, page, SEO, portal = false } = Astro.props;
 const { language, textDirection } = { language: "en", textDirection: "ltr" };
 
 const icon = {
@@ -88,7 +89,7 @@ const icon = {
   <Posthog />
   <body>
     <slot />
-    <Footer store={store} page={page} />
+    {!portal && <Footer store={store} page={page} />}
   </body>
   <style>
     html,
