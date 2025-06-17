@@ -63,7 +63,7 @@ const Footer = ({store, page}: FooterProps) => {
               {pages?.filter(p => ['about', 'newsletter', 'blog', 'products'].includes(p.data.slug))?.map((page) => (
                 <li key={page.id}>
                   <a
-                    href={`/${page.data.slug}`}
+                    href={`/${page.data.slug === 'products' ? 'offerings' : page.data.slug}`}
                     target={'_self'}
                     className="text-gray-400 hover:text-white transition-colors"
                   >
