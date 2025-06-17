@@ -1,4 +1,3 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
@@ -8,10 +7,12 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 import sitemap from '@astrojs/sitemap';
 
-// https://astro.build/config
-// @TODO: needs to replace during build
+import { loadEnv } from "vite";
+
+const { PUBLIC_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
 export default defineConfig({
-  site: 'https://summit.caliman.org',
+  site: PUBLIC_URL || 'https://summit.caliman.org',
   integrations: [react(), sitemap()],
 
   vite: {
