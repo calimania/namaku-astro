@@ -35,14 +35,14 @@ const { product, store, page } = Astro.props;
     >
       <div class="max-w-7xl mx-auto px-4 py-4">
         <a
-          href="/products"
+          href="/offerings"
           class="text-gray-600 hover:text-blue-600 transition-colors inline-flex items-center gap-2 group"
         >
           <IconChevronsLeft
             size={16}
             className="group-hover:-translate-x-1 transition-transform"
           />
-          <span>Back to {page?.Title || "products"}</span>
+          <span>Back to {page?.Title || "offerings"}</span>
         </a>
       </div>
     </div>
@@ -101,17 +101,18 @@ const { product, store, page } = Astro.props;
               )
             }
 
-            {/* Product Info */}
             <div>
               <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 {product.Name}
               </h1>
-              <div class="flex items-baseline gap-4 mb-6">
+
+              {!!product.usd_price && <div class="flex items-baseline gap-4 mb-6">
                 <span class="text-3xl font-bold text-blue-600">
                   ${product.usd_price}{" "}
                   {(product?.PRICES?.length || 0) > 1 && <>+</>}
                 </span>
-              </div>
+              </div>}
+
               <div class="prose prose-lg text-gray-600">
                 <Markdown
                   markdown_string={product.Description as string}
@@ -122,13 +123,13 @@ const { product, store, page } = Astro.props;
 
             <div class="flex gap-4">
               <a
-                href={product.SEO?.metaUrl || "#"}
-                target="_blank"
+                href={product?.SEO?.metaUrl || "#"}
                 rel="noopener noreferrer"
                 class="flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:opacity-90 transition-opacity"
               >
                 <IconShoppingCart size={20} className="mr-2" />
-                Buy in {new URL(product?.SEO?.metaUrl as string).hostname}
+                <!-- Buy in {new URL(product?.SEO?.metaUrl as string).hostname} -->
+                 Coming soon
               </a>
               <button
                 class="p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors"

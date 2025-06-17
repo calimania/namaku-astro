@@ -16,6 +16,11 @@ const store = stores?.[0]?.data as any as Store;
 const subPages = pages
   .filter((page) => page?.data?.slug !== "about" && page?.data?.slug !== "home")
   .map((page) => page.data);
+
+const replacements: Record<string, string> = {
+  "/products": "offerings",
+  "/about/platform.index": "portal",
+};
 ---
 
 <Layout store={store} page={aboutPage}>
@@ -56,32 +61,41 @@ const subPages = pages
             Explore More
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {subPages.map((page) => (
-              <a
-                href={`${!["blog", "products", "newsletter", "events"].includes(page.slug) ? "/about/" : "/"}${page.slug}`}
-                class="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                {page.SEO?.socialImage?.url && (
-                  <div class="aspect-video overflow-hidden">
-                    <img
-                      src={page.SEO.socialImage.url}
-                      alt={page.Title}
-                      class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                )}
-                <div class="p-6">
-                  <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {page.Title}
-                  </h3>
-                  {page.SEO?.metaDescription && (
-                    <p class="text-gray-600 line-clamp-2">
-                      {page.SEO.metaDescription}
-                    </p>
+            {subPages.map((page) => {
+              const dest = `${!["blog", "products", "newsletter", "events"].includes(page.slug) ? "/about/" : "/"}${page.slug}`;
+
+              if (!page.Active) {
+                return <></>
+                };
+
+
+              return (
+                <a
+                  href={(replacements[dest] as string) || dest}
+                  class="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  {page.SEO?.socialImage?.url && (
+                    <div class="aspect-video overflow-hidden">
+                      <img
+                        src={page.SEO.socialImage.url}
+                        alt={page.Title}
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
                   )}
-                </div>
-              </a>
-            ))}
+                  <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                      {page.Title}
+                    </h3>
+                    {page.SEO?.metaDescription && (
+                      <p class="text-gray-600 line-clamp-2">
+                        {page.SEO.metaDescription}
+                      </p>
+                    )}
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
       )
