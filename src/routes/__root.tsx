@@ -111,11 +111,12 @@ function Component() {
 				<div className="max-w-7xl mx-auto px-6 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
 					<div className="flex items-center gap-2">
 						{store?.Favicon?.url && (
-							<img src={store.Favicon.url} alt="Logo" className="h-8 w-8 rounded-full" />
+							<a href="/">
+								<img src={store.Favicon.url} alt="Logo" className="h-8 w-8 rounded-full" />
+							</a>
 						)}
-						<span className="font-semibold">{isLoading ? 'Loading...' : store?.title}</span>
 					</div>
-					<div className="text-xs text-gray-400">Namaku Wellness &copy; {new Date().getFullYear()}</div>
+					<div className="text-xs text-gray-400"><span className="font-semibold">{isLoading ? 'Loading...' : store?.title}</span> &copy; {new Date().getFullYear()}</div>
 				</div>
 			</footer>
 			<ReactQueryDevtools buttonPosition='top-right' />
