@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import AlbumsGrid from "../../components/albums.grid";
 import type { Store, Page, Album } from "../../markket/index.d";
 import Content from "../../components/content.blocks";
-import { IconChevronsLeft } from "@tabler/icons-react";
+import { IconChevronsLeft, IconArrowRight } from "@tabler/icons-react";
 
 const stores = await getCollection("store");
 const pages = await getCollection("pages");
@@ -28,24 +28,23 @@ const replacements: Record<string, string> = {
     <div class="mb-8">
       <a
         href={`/`}
-        class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
+        class="text-gray-400 hover:text-blue-600 transition-colors inline-flex items-center gap-2"
       >
         <IconChevronsLeft size={16} />
         Back to home
       </a>
     </div>
   </div>
-  <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+  <div class="min-h-screen bg-gradient-to-b from-sky-50 to-white">
     <!-- Hero Section -->
     <div class="relative pt-20 pb-16 px-4">
-      <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+      <div class="max-w-4xl mx-auto text">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-emerald-500 bg-clip-text text-transparent drop-shadow">
           {aboutPage?.Title || "About Us"}
         </h1>
-
         {
           aboutPage?.Content && (
-            <div class="prose prose-lg max-w-none">
+            <div class="prose prose-lg max-w-none mx-auto text-gray-700">
               <Content params={{ page: aboutPage }} />
             </div>
           )
@@ -57,22 +56,17 @@ const replacements: Record<string, string> = {
     {
       subPages.length > 0 && (
         <div class="max-w-6xl mx-auto px-4 pb-20">
-          <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">
+          <h2 class="text-2xl font-bold mb-8 text-center text-gray-800 tracking-tight">
             Explore More
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {subPages.map((page) => {
               const dest = `${!["blog", "products", "newsletter", "events"].includes(page.slug) ? "/about/" : "/"}${page.slug}`;
-
-              if (!page.Active) {
-                return <></>
-                };
-
-
+              if (!page.Active) return <></>;
               return (
                 <a
                   href={(replacements[dest] as string) || dest}
-                  class="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  class="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 hover:border-blue-200"
                 >
                   {page.SEO?.socialImage?.url && (
                     <div class="aspect-video overflow-hidden">
@@ -83,15 +77,18 @@ const replacements: Record<string, string> = {
                       />
                     </div>
                   )}
-                  <div class="p-6">
-                    <h3 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <div class="p-6 flex flex-col gap-2">
+                    <h3 class="text-xl font-bold mb-1 text-gray-900 group-hover:text-blue-600 transition-colors">
                       {page.Title}
                     </h3>
                     {page.SEO?.metaDescription && (
-                      <p class="text-gray-600 line-clamp-2">
+                      <p class="text-gray-600 line-clamp-2 mb-2">
                         {page.SEO.metaDescription}
                       </p>
                     )}
+                    <span class="inline-flex items-center gap-1 text-blue-500 font-semibold text-sm group-hover:underline">
+                      Learn more <IconArrowRight size={16} />
+                    </span>
                   </div>
                 </a>
               );

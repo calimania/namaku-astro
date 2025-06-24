@@ -134,6 +134,7 @@ export interface ContentBlock {
   image?: {
     url: string;
     alternativeText?: string;
+    caption?: string;
     formats?: {
       thumbnail?: { url: string };
       small?: { url: string };
