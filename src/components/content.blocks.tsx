@@ -94,7 +94,7 @@ export default function PageContent({ params, }: PageContentProps) {
         </a>
         {node?.alternativeText && (
           <figcaption className="mt-3 text-sm text-center text-gray-600 italic">
-            {node?.alternativeText}
+            {node?.caption || node?.alternativeText}
           </figcaption>
         )}
       </figure>
