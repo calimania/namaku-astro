@@ -52,7 +52,7 @@ const MagicPage = ({page, store}: { page: Page, store: Store }) => {
 
       if (res.ok && data.jwt) {
         setValidationStatus('valid');
-        localStorage.setItem('farmday.auth', JSON.stringify(data))
+        localStorage.setItem('namaku.auth', JSON.stringify(data))
         window.location.href = '/portal'
       } else {
         setValidationStatus('invalid');
