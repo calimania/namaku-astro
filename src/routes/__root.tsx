@@ -61,7 +61,7 @@ const getAuth = () => {
 	return json?.jwt;
 }
 
-const getPageSubtitle = (activei: string) => {
+const getPageSubtitle = (activeTab: string) => {
 	switch (activeTab) {
 		case 'dashboard': return 'Welcome back! Here\'s what\'s happening today.';
 		case 'patients': return 'Manage your patient profiles and health journeys';
