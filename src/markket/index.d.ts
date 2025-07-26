@@ -367,3 +367,54 @@ export interface Product {
   Thumbnail?: ImageFormat;
   stores?: Store[];
 }
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: 'coach' | 'patient';
+  avatar?: string;
+  createdAt: Date;
+}
+
+export interface Coach extends User {
+  role: 'coach';
+  specialization: string;
+  bio: string;
+  patients: Patient[];
+  totalPatients: number;
+  totalAppointments: number;
+}
+
+export interface Patient extends User {
+  role: 'patient';
+  coachId: string;
+  dateOfBirth: Date;
+  phone: string;
+  emergencyContact: string;
+  healthGoals: string[];
+  medicalHistory: string;
+  lastVisit?: Date;
+}
+
+export interface Appointment {
+  id: string;
+  coachId: string;
+  patientId: string;
+  patientName: string;
+  date: Date;
+  duration: number;
+  type: 'initial' | 'follow-up' | 'group' | 'emergency';
+  status: 'scheduled' | 'completed' | 'cancelled' | 'no-show';
+  notes?: string;
+  videoRoomId?: string;
+}
+
+export interface VideoCall {
+  id: string;
+  appointmentId: string;
+  participants: User[];
+  status: 'waiting' | 'active' | 'ended';
+  startedAt?: Date;
+  endedAt?: Date;
+}

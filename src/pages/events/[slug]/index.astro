@@ -31,17 +31,7 @@ const { event, store } = Astro.props;
 // Format dates
 const startDate = new Date(event.startDate);
 const endDate = new Date(event.endDate);
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-  }).format(date);
-};
+import { formatDate } from "../../../lib/date";
 ---
 
 <Layout store={store} page={{ Title: event.Name } as any} SEO={event?.SEO}>
