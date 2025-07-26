@@ -1,4 +1,4 @@
-import { markketplace } from "../config";
+import { markketplace } from "../markket.config";
 import type { Page, ContentBlock , Album, AlbumTrack, Article } from "../markket/index.d";
 
 

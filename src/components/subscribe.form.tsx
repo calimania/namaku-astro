@@ -2,7 +2,7 @@
 
 import React, { useState, type FormEvent } from 'react';
 import { type Store } from '../markket/index.d';
-import { markketplace } from '../config';
+import { markketplace } from '../markket.config';
 import { IconRefreshAlert, IconMailbox, IconSquareRoundedX } from '@tabler/icons-react';
 
 interface SubscribeFormProps {
