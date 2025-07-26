@@ -7,8 +7,12 @@ import {
   IconChartBar as BarChart3,
   IconSettings as Settings,
   IconMoodX as LogOut,
-  IconVaccine as Stethoscope
+  IconVaccine as Stethoscope,
+  IconClipboardData as About,
 } from '@tabler/icons-react';
+import {
+  Link,
+} from '@tanstack/react-router'
 
 interface SidebarProps {
   activeTab: string;
@@ -28,11 +32,12 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { id: 'dashboard', name: 'Dashboard', icon: Home },
+  { id: '', name: 'Dashboard', icon: Home },
   { id: 'patients', name: 'Patients', icon: Users },
   { id: 'appointments', name: 'Appointments', icon: Calendar },
   { id: 'video', name: 'Video Calls', icon: Video },
   { id: 'analytics', name: 'Analytics', icon: BarChart3 },
+  { id: 'about', name: 'About', icon: About },
   { id: 'settings', name: 'Settings', icon: Settings },
 ];
 
@@ -54,7 +59,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, profil
           const isActive = activeTab === item.id;
 
           return (
-            <button
+            <Link
+              to={`/portal/${item.id}`}
               key={item.id}
               onClick={() => onTabChange(item.id)}
               className={
@@ -62,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, profil
             >
               <Icon className="w-5 h-5 mr-3" />
               {item.name}
-            </button>
+            </Link>
           );
         })}
       </nav>
