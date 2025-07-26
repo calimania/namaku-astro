@@ -1,6 +1,6 @@
 import type { Store, Page } from "../../markket";
 import React, { useState } from "react";
-import { markketplace } from "../../config";
+import { markketplace } from "../../markket.config";
 import { IconAlertCircle, IconCheck, IconMail, IconRotateClockwise2 as Loader2, } from "@tabler/icons-react";
 import {
   BlocksRenderer,
@@ -24,7 +24,7 @@ const MagicLinkForm: React.FC<MagicLinkFormProps> = ({ page, store }) => {
     setMessage("");
 
     try {
-      const res = await fetch(new URL(`/api/markket?path=/api/auth-magic/request`, markketplace.markket), {
+      const res = await fetch(new URL(`/api/markket?path=/api/auth-magic/request`, markketplace.ehr), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

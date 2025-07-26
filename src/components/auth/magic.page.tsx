@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import MagicLinkForm from "./magic.form";
 import MagicVerifyingForm from "./magic.verifying";
 
-import { markketplace} from '../../config';
+import { markketplace } from '../../markket.config';
 
 const MagicPage = ({page, store}: { page: Page, store: Store }) => {
   const [urlCode, setUrlCode] = useState<string | null>(null);
@@ -36,7 +36,7 @@ const MagicPage = ({page, store}: { page: Page, store: Store }) => {
     setValidationStatus('loading');
 
     try {
-      const res = await fetch(new URL(`/api/markket?path=/api/auth-magic/verify`, markketplace.markket), {
+      const res = await fetch(new URL(`/api/markket?path=/api/auth-magic/verify`, markketplace.ehr), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

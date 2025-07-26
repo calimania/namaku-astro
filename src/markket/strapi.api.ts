@@ -2,7 +2,7 @@ import { z } from "astro:content";
 import type { Loader } from "astro/loaders";
 import type { ZodTypeAny, ZodObject } from "zod";
 
-import { markketplace } from "../config";
+import { markketplace } from "../markket.config";
 
 const { api: STRAPI_BASE_URL, store_slug: STORE_SLUG } = markketplace;
 const SYNC_INTERVAL = 60 * 1000; // 1 minute in milliseconds

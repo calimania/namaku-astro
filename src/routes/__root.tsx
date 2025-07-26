@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import type { AstroGlobal } from 'astro'
-import { markketplace } from "../config";
+import { markketplace } from "../markket.config";
 import type { Store } from '../markket';
 import { useQuery } from "@tanstack/react-query";
 import { IconAdjustmentsStar, IconMacroFilled, IconHome, IconInfoCircle, IconVideo, IconChevronLeft, IconChevronRight } from '@tabler/icons-react';

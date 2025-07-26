@@ -1,6 +1,6 @@
 // import { useRouteContext } from "@tanstack/react-router";
 // import type { Store } from '../../markket';
-import { markketplace } from "../../config";
+import { markketplace } from "../../markket.config";
 import { useQuery } from "@tanstack/react-query";
 import PageContent from "../../components/content.blocks";
 import type { Page } from "../../markket";

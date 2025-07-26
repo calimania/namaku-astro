@@ -1,4 +1,4 @@
-import { markketplace } from "../config";
+import { markketplace } from "../markket.config";
 import { defineCollection } from "astro:content";
 
 import { strapiLoader } from "../markket";
