@@ -13,6 +13,7 @@ import {
 } from '@tabler/icons-react';
 import { Button } from '../../components/ui/Button';
 import { Avatar } from '../../components/ui/Avatar';
+import VideoClient from '../../components/ui/video.client';
 
 export const VideoCallPage: React.FC = () => {
   const [isVideoOn, setIsVideoOn] = useState(true);
@@ -65,6 +66,7 @@ export const VideoCallPage: React.FC = () => {
 
       {/* Main Video Area */}
       <div className="flex-1 flex">
+        <VideoClient role={1} />
         {/* Primary Video */}
         <div className="flex-1 relative bg-gray-800 flex items-center justify-center">
           <div className="w-full h-full bg-gradient-to-br from-blue-600 to-emerald-600 flex items-center justify-center">
@@ -120,7 +122,7 @@ export const VideoCallPage: React.FC = () => {
           <div className="p-4 border-b border-gray-200">
             <div className="relative bg-gray-800 rounded-lg overflow-hidden h-32">
               <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
-                <div className="text-center text-white">
+                <div className="text-center text-white" id="my-self-view-container">
                   <Avatar name="Dr. Sarah Johnson" size="md" className="mx-auto mb-2" />
                   <p className="text-xs">You</p>
                 </div>
