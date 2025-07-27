@@ -7,8 +7,7 @@ import Markdown from "../../components/content.md";
 import { IconChevronsLeft } from "@tabler/icons-react";
 
 const albums = await getCollection("albums");
-const stores = await getCollection("store");
-const store = stores?.[0]?.data as any as Store;
+const store = (await getCollection("store"))?.[0]?.data;
 const pages = await getCollection("pages");
 const homepage = pages?.find((page) => page.data.slug === "home")?.data;
 

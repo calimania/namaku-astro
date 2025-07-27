@@ -68,7 +68,7 @@ export const VideoCallPage: React.FC = () => {
       <div className="flex-1 flex">
         <VideoClient role={1} />
         {/* Primary Video */}
-        <div className="flex-1 relative bg-gray-800 flex items-center justify-center">
+        <div className="flex-1 relative bg-gray-800 flex items-center justify-center" id="patient-video-container" >
           <div className="w-full h-full bg-gradient-to-br from-blue-600 to-emerald-600 flex items-center justify-center">
             <div className="text-center text-white">
               <Avatar name="Alice Smith" size="xl" className="mx-auto mb-4 w-24 h-24" />

@@ -10,3 +10,6 @@ code::after {
 html {
   scroll-behavior: smooth;
 }
+#sessionContainer main {
+  min-height: 88vh !important;
+}

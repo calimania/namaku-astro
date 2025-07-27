@@ -1,0 +1,11 @@
+---
+import MeetingRoom from "../components/ui/meeting.room";
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const store = (await getCollection("store"))?.[0]?.data;
+---
+
+<Layout store={store} portal>
+  <MeetingRoom role={0} client:only user_identity="patient" />
+</Layout>
