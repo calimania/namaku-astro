@@ -22,6 +22,7 @@ export const markketplace = {
     logo: 'https://markketplace.nyc3.digitaloceanspaces.com/uploads/e9f3a0b16c347ff596e4d0a5c7b0d47d.png',
     color: '',
     favicon: 'https://markketplace.nyc3.digitaloceanspaces.com/uploads/7e7d574c6559b065e8fcf0975792a22a.png',
+    meeting_bg: 'https://markketplace.nyc3.digitaloceanspaces.com/uploads/1698b526b156cf32e390d33fb099fe22.jpg',
   },
   feature_flags: {
     zoom_call: import.meta.env.PUBLIC_ZOOM_FEATURE_UNLOCK_CODE || '',

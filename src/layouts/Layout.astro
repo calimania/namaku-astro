@@ -1,15 +1,16 @@
 ---
-import type { Page, SEO, Store } from "../markket/index.d";
+import type { Page, SEO } from "../markket/index.d";
 import { markketplace } from "../markket.config";
 import Footer from "../components/layout.footer";
 import Posthog from "../components/posthog.astro";
 
 import "../styles/global.css";
+import type { CollectionEntry } from "astro:content";
 
 export interface Props {
   redirect?: string;
   page?: Page;
-  store?: Store;
+  store?: CollectionEntry<"store">["data"];
   SEO?: SEO;
   portal?: boolean;
 }
