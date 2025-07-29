@@ -80,7 +80,6 @@ export const VideoCallPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Video Controls Overlay */}
           <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
             <div className="flex items-center space-x-4 bg-black bg-opacity-50 rounded-full px-6 py-3">
               <button
@@ -190,14 +189,6 @@ export const VideoCallPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* SDK Integration Note */}
-      <div className="bg-gray-800 text-white px-6 py-3 text-center">
-        <p className="text-sm">
-          🔧 <strong>Integration Ready:</strong> This interface is designed to work with your video SDK.
-          Replace the demo video areas with your SDK's video components.
-        </p>
       </div>
     </div>
   );

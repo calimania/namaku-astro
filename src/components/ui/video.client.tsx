@@ -17,9 +17,11 @@ type VideoClientProps ={
  * @returns
  */
 const VideoRoom = ({ role }: VideoClientProps) => {
-  const session_name = 'zoom-demo-meeting';
   const user_identity = 'provider';
   const router = useRouter();
+
+  const params = new URLSearchParams(window.location.search);
+  const session_name = params.get('session') || '';
 
   const attachVIdeo = (user, stream) => {
     if (user.displayName !== user_identity && user.bVideoOn) {
@@ -103,7 +105,7 @@ const VideoRoom = ({ role }: VideoClientProps) => {
   }
 
   useEffect(() => {
-    if (!import.meta.env.SSR) {
+    if (!import.meta.env.SSR && session_name) {
       init();
     }
   }, [router]);
