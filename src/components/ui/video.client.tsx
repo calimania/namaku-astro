@@ -116,6 +116,7 @@ const VideoRoom = ({ role }: VideoClientProps) => {
     setTimeout(() => {
       const muteBtn = document.getElementById('mute-unmute-button');
       const videoBtn = document.getElementById('video-toggle-button');
+      const endCallBtn = document.getElementById('end-call-button');
       let audioMuted = false;
       let videoOn = true;
 
@@ -139,6 +140,18 @@ const VideoRoom = ({ role }: VideoClientProps) => {
             await stream.startVideo();
             videoOn = true;
           }
+        });
+      }
+      if (endCallBtn) {
+        endCallBtn.addEventListener('click', async () => {
+          try {
+            await stream.stopVideo();
+            await stream.stopAudio();
+            await client.leave();
+          } catch (e) {
+            // ignore
+          }
+          window.location.href = '/portal/video';
         });
       }
     }, 800);

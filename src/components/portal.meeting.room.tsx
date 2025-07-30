@@ -4,7 +4,7 @@ import {
   IconDeviceTvOff as VideoOff,
   IconMicrophone as Mic,
   IconMicrophoneOff as MicOff,
-  // IconPhone as Phone,
+  IconPhone as Phone,
   // IconSettings as Settings,
   IconMessageChatbotFilled as MessageCircle,
   // IconShare as Share,
@@ -59,6 +59,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
   const [callDuration, setCallDuration] = useState(0);
   const [demoTimeLeft, setDemoTimeLeft] = useState(demoTimeLimit);
   const [chatMessage, setChatMessage] = useState('');
+  // Sidebar toggle state
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768; // open by default on desktop
+    }
+    return true;
+  });
 
   // Demo timer
   useEffect(() => {
@@ -119,7 +126,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
       )}
 
       {/* Main Video Area */}
-      <div className="flex-1 flex">
+      <div className="flex-1 flex relative">
         <VideoClient role={1} />
 
         {/* Primary Video */}
@@ -177,34 +184,42 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
               >
                 {isVideoOn ? <Video className="w-7 h-7" /> : <VideoOff className="w-7 h-7" />}
               </button>
-              {/* <button
-                className="p-3 rounded-full bg-gray-700/80 text-white hover:bg-gray-600 transition-all duration-200 transform hover:scale-110"
-                title="Share screen"
-              >
-                <Share className="w-5 h-5" />
-              </button>
-
               <button
-                className="p-3 rounded-full bg-gray-700/80 text-white hover:bg-gray-600 transition-all duration-200 transform hover:scale-110"
-                title="Settings"
-              >
-                <Settings className="w-5 h-5" />
-              </button>
-
-              <button
+                id="end-call-button"
                 className="p-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition-all duration-200 transform hover:scale-110 shadow-lg"
                 title="End call"
               >
                 <Phone className="w-5 h-5" />
-              </button> */}
+              </button>
             </div>
           </div>
         </div>
-
-        {/* Sidebar */}
-        <div className="w-80 bg-white border-l border-gray-200 flex flex-col shadow-xl">
-          {/* Self Video */}
-          <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+        {/* Sidebar panel */}
+        <div
+          className={`fixed md:static z-20 transition-all duration-300 bg-white border-l border-gray-200 shadow-xl flex flex-col
+              ${sidebarOpen ? 'right-0 bottom-0 w-full md:w-80 h-5/6 md:h-auto' : 'right-[-100vw] md:right-0 w-0 md:w-16 h-0 md:h-auto'}
+              md:relative md:flex md:w-80 md:h-auto
+              ${sidebarOpen ? 'opacity-100' : 'opacity-0 md:opacity-100'}
+              ${sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none md:pointer-events-auto'}
+              rounded-t-2xl md:rounded-none
+            `}
+          style={{ maxWidth: sidebarOpen ? undefined : 0 }}
+          id="my-self-view-sidebar"
+        >
+          <button
+            onClick={() => setSidebarOpen((v) => !v)}
+            className={`z-30 fixed md:static bottom-6 right-6 md:bottom-auto md:right-auto bg-gradient-to-br from-blue-600 to-emerald-500 text-white rounded-full shadow-2xl p-4 md:p-2 border-4 border-white hover:scale-110 hover:shadow-emerald-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 ${sidebarOpen ? '' : 'animate-bounce'}`}
+            aria-label={sidebarOpen ? 'Hide self view and chat' : 'Show self view and chat'}
+            style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' }}
+          >
+            {sidebarOpen ? (
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            ) : (
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            )}
+          </button>
+          {/* Self Video (mini floating if closed on mobile) */}
+          <div className={`p-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50 ${!sidebarOpen ? 'hidden md:block' : ''}`}>
             <div className="relative bg-gray-800 rounded-xl overflow-hidden h-32 shadow-lg">
               <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
                 <div className="text-center text-white" id="my-self-view-container">
@@ -215,81 +230,93 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             </div>
           </div>
 
-          {/* Session Info */}
-          <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-50 to-emerald-50">
-            <h3 className="font-bold text-gray-900 mb-3 flex items-center">
-              <User className="w-4 h-4 mr-2 text-blue-600" />
-              Session Details
-            </h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
-                <span className="text-gray-600 font-medium">Patient:</span>
-                <span className="font-bold text-gray-900">{patient.name}</span>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
-                <span className="text-gray-600 font-medium">Type:</span>
-                <span className="font-bold text-blue-600">{patient.type}</span>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
-                <span className="text-gray-600 font-medium">Scheduled:</span>
-                <span className="font-bold text-emerald-600">{patient.scheduledDuration} min</span>
-              </div>
-              <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
-                <span className="text-gray-600 font-medium">Goals:</span>
-                <span className="font-bold text-purple-600">{patient.goals}</span>
+          {/* Mini floating self-view (mobile, when sidebar closed) */}
+          {!sidebarOpen && (
+            <div className="fixed bottom-20 right-6 z-40 md:hidden">
+              <div className="bg-gray-800 rounded-full shadow-xl border-4 border-white w-16 h-16 flex items-center justify-center">
+                <div className="text-center text-white" id="my-self-view-container-mini">
+                  <Avatar name={doctor.name} size="sm" className="mx-auto" />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Chat */}
-          <div className="flex-1 flex flex-col">
-            <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
-              <h3 className="font-bold text-gray-900 flex items-center">
-                <MessageCircle className="w-4 h-4 mr-2 text-blue-600" />
-                Session Chat
+          {/* Session Info and Chat (hidden if sidebar closed) */}
+          <div className={`${sidebarOpen ? '' : 'hidden md:block'}`}>
+            {/* Session Info */}
+            <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-50 to-emerald-50">
+              <h3 className="font-bold text-gray-900 mb-3 flex items-center">
+                <User className="w-4 h-4 mr-2 text-blue-600" />
+                Session Details
               </h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
+                  <span className="text-gray-600 font-medium">Patient:</span>
+                  <span className="font-bold text-gray-900">{patient.name}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
+                  <span className="text-gray-600 font-medium">Type:</span>
+                  <span className="font-bold text-blue-600">{patient.type}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
+                  <span className="text-gray-600 font-medium">Scheduled:</span>
+                  <span className="font-bold text-emerald-600">{patient.scheduledDuration} min</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm">
+                  <span className="text-gray-600 font-medium">Goals:</span>
+                  <span className="font-bold text-purple-600">{patient.goals}</span>
+                </div>
+              </div>
             </div>
 
-            <div className="flex-1 p-4 space-y-3 overflow-y-auto bg-gray-50" id="chat-container">
-              {(chatMessages || []).map((msg, index) => (
-                <div key={index} className={`rounded-xl p-3 shadow-sm ${
-                  msg.sender === doctor.name
+            {/* Chat */}
+            <div className="flex-1 flex flex-col">
+              <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
+                <h3 className="font-bold text-gray-900 flex items-center">
+                  <MessageCircle className="w-4 h-4 mr-2 text-blue-600" />
+                  Session Chat
+                </h3>
+              </div>
+
+              <div className="flex-1 p-4 space-y-3 overflow-y-auto bg-gray-50" id="chat-container">
+                {(chatMessages || []).map((msg, index) => (
+                  <div key={index} className={`rounded-xl p-3 shadow-sm ${msg.sender === doctor.name
                     ? 'bg-blue-100 border-l-4 border-blue-500'
                     : 'bg-emerald-100 border-l-4 border-emerald-500'
-                }`}>
-                  <p className="text-sm">
-                    <strong className={msg.sender === doctor.name ? 'text-blue-800' : 'text-emerald-800'}>
-                      {msg.sender}:
-                    </strong>{' '}
-                    <span className="text-gray-900">{msg.message}</span>
-                  </p>
-                  <span className={`text-xs ${
-                    msg.sender === doctor.name ? 'text-blue-600' : 'text-emerald-600'
-                  }`}>
-                    {getTimeAgo(msg.timestamp)}
-                  </span>
-                </div>
-              ))}
-            </div>
+                    }`}>
+                    <p className="text-sm">
+                      <strong className={msg.sender === doctor.name ? 'text-blue-800' : 'text-emerald-800'}>
+                        {msg.sender}:
+                      </strong>{' '}
+                      <span className="text-gray-900">{msg.message}</span>
+                    </p>
+                    <span className={`text-xs ${msg.sender === doctor.name ? 'text-blue-600' : 'text-emerald-600'
+                      }`}>
+                      {getTimeAgo(msg.timestamp)}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="p-4 border-t border-gray-200 bg-white">
-              <form action="" id="chat-form-container">
-                <div className="flex space-x-2">
-                  <input
-                    type="text"
-                    placeholder="Type a message..."
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm shadow-sm"
-                  />
-                  <Button
-                    size="sm"
-                    onClick={sendMessage}
-                    id="chat-send-message-button"
-                    className="bg-blue-600 hover:bg-blue-700 px-3"
-                  >
-                    <Send className="w-4 h-4" />
-                  </Button>
-                </div>
-              </form>
+              <div className="p-4 border-t border-gray-200 bg-white">
+                <form action="" id="chat-form-container">
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      placeholder="Type a message..."
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm shadow-sm"
+                    />
+                    <Button
+                      size="sm"
+                      onClick={sendMessage}
+                      id="chat-send-message-button"
+                      className="bg-blue-600 hover:bg-blue-700 px-3"
+                    >
+                      <Send className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
