@@ -4,10 +4,10 @@ import {
   IconDeviceTvOff as VideoOff,
   IconMicrophone as Mic,
   IconMicrophoneOff as MicOff,
-  IconPhone as Phone,
-  IconSettings as Settings,
+  // IconPhone as Phone,
+  // IconSettings as Settings,
   IconMessageChatbotFilled as MessageCircle,
-  IconShare as Share,
+  // IconShare as Share,
   IconClock as Clock,
   IconGift as Gift,
   IconUserCircle as User,
@@ -149,33 +149,35 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
           {/* Control Bar */}
           <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
             <div className="flex items-center space-x-3 bg-black/60 backdrop-blur-md rounded-full px-6 py-3 shadow-xl border border-white/10">
+
               <button
                 onClick={() => setIsAudioOn(!isAudioOn)}
                 id="mute-unmute-button"
-                className={`p-3 rounded-full transition-all duration-200 transform hover:scale-110 ${
+                className={`p-5 rounded-full text-xl transition-all duration-200 transform hover:scale-110 shadow-lg border-2 ${
                   isAudioOn
-                    ? 'bg-gray-700/80 text-white hover:bg-gray-600'
-                    : 'bg-red-500 text-white hover:bg-red-600 animate-pulse'
+                  ? 'bg-gray-700/80 text-white hover:bg-gray-600 border-gray-500'
+                  : 'bg-red-500 text-white hover:bg-red-600 animate-pulse border-red-500'
                 }`}
+                style={{ minWidth: 60, minHeight: 60 }}
                 title={isAudioOn ? 'Mute' : 'Unmute'}
               >
-                {isAudioOn ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+                {isAudioOn ? <Mic className="w-7 h-7" /> : <MicOff className="w-7 h-7" />}
               </button>
 
               <button
                 onClick={() => setIsVideoOn(!isVideoOn)}
                 id="video-toggle-button"
-                className={`p-3 rounded-full transition-all duration-200 transform hover:scale-110 ${
+                className={`p-5 rounded-full text-xl transition-all duration-200 transform hover:scale-110 shadow-lg border-2 ${
                   isVideoOn
-                    ? 'bg-gray-700/80 text-white hover:bg-gray-600'
-                    : 'bg-red-500 text-white hover:bg-red-600 animate-pulse'
+                  ? 'bg-gray-700/80 text-white hover:bg-gray-600 border-gray-500'
+                  : 'bg-red-500 text-white hover:bg-red-600 animate-pulse border-red-500'
                 }`}
+                style={{ minWidth: 60, minHeight: 60 }}
                 title={isVideoOn ? 'Turn off camera' : 'Turn on camera'}
               >
-                {isVideoOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
+                {isVideoOn ? <Video className="w-7 h-7" /> : <VideoOff className="w-7 h-7" />}
               </button>
-
-              <button
+              {/* <button
                 className="p-3 rounded-full bg-gray-700/80 text-white hover:bg-gray-600 transition-all duration-200 transform hover:scale-110"
                 title="Share screen"
               >
@@ -194,7 +196,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 title="End call"
               >
                 <Phone className="w-5 h-5" />
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

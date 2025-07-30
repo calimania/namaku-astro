@@ -1,3 +1,4 @@
+
 import React, { useEffect  } from 'react'
 import { markketplace } from '../../markket.config';
 import { useRouter } from '@tanstack/react-router';
@@ -112,6 +113,35 @@ const VideoRoom = ({ role }: VideoClientProps) => {
       }
     }, 800);
 
+    setTimeout(() => {
+      const muteBtn = document.getElementById('mute-unmute-button');
+      const videoBtn = document.getElementById('video-toggle-button');
+      let audioMuted = false;
+      let videoOn = true;
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', async () => {
+          if (audioMuted) {
+            await stream.unmuteAudio();
+            audioMuted = false;
+          } else {
+            await stream.muteAudio();
+            audioMuted = true;
+          }
+        });
+      }
+      if (videoBtn) {
+        videoBtn.addEventListener('click', async () => {
+          if (videoOn) {
+            await stream.stopVideo();
+            videoOn = false;
+          } else {
+            await stream.startVideo();
+            videoOn = true;
+          }
+        });
+      }
+    }, 800);
 
     if (stream.isRenderSelfViewWithVideoElement()) {
       const element = await stream.attachVideo(client.getCurrentUserInfo().userId, VideoQuality.Video_720P) as VideoPlayer;
