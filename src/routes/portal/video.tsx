@@ -1,6 +1,7 @@
 import { MeetingRoom } from '../../components/portal.meeting.room';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
+import type { UserProfile } from '../../markket';
 
 function VideoCallPage() {
 
@@ -11,9 +12,10 @@ function VideoCallPage() {
     scheduledDuration: 60
   });
 
-  const { data: profile } = useQuery({
-    queryKey: ["profile"],
-  });
+  const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile']) as UserProfile | undefined;
+
+  console.log({ profile })
 
   return (
     <MeetingRoom
