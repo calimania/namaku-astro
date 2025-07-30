@@ -17,6 +17,12 @@ import { Button } from './ui/Button';
 import { Avatar } from './ui/Avatar';
 import VideoClient from './ui/video.client';
 
+interface ChatMessage {
+  sender: string;
+  message: string;
+  timestamp: Date;
+}
+
 interface MeetingRoomProps {
   patient?: {
     name: string;
@@ -29,6 +35,8 @@ interface MeetingRoomProps {
   };
   isDemo?: boolean;
   demoTimeLimit?: number; // in seconds
+  chatMessages?: ChatMessage[];
+  onSendChat?: (msg: string) => void;
 }
 
 export const MeetingRoom: React.FC<MeetingRoomProps> = ({
@@ -42,25 +50,15 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     name: 'Dr. Sarah Johnson'
   },
   isDemo = true,
-  demoTimeLimit = 300 // 5 minutes
+  demoTimeLimit = 300, // 5 minutes
+  chatMessages,
+  onSendChat
 }) => {
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [isAudioOn, setIsAudioOn] = useState(true);
   const [callDuration, setCallDuration] = useState(0);
   const [demoTimeLeft, setDemoTimeLeft] = useState(demoTimeLimit);
   const [chatMessage, setChatMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState([
-    {
-      sender: doctor.name,
-      message: "How have you been feeling since our last session?",
-      timestamp: new Date(Date.now() - 120000) // 2 min ago
-    },
-    {
-      sender: patient.name,
-      message: "Much better! I've been following the sleep schedule we discussed.",
-      timestamp: new Date(Date.now() - 60000) // 1 min ago
-    }
-  ]);
 
   // Demo timer
   useEffect(() => {
@@ -82,11 +80,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
   const sendMessage = () => {
     if (chatMessage.trim()) {
-      setChatMessages(prev => [...prev, {
-        sender: doctor.name,
-        message: chatMessage,
-        timestamp: new Date()
-      }]);
+      if (onSendChat) {
+        onSendChat(chatMessage);
+      }
       setChatMessage('');
     }
   };
@@ -155,6 +151,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             <div className="flex items-center space-x-3 bg-black/60 backdrop-blur-md rounded-full px-6 py-3 shadow-xl border border-white/10">
               <button
                 onClick={() => setIsAudioOn(!isAudioOn)}
+                id="mute-unmute-button"
                 className={`p-3 rounded-full transition-all duration-200 transform hover:scale-110 ${
                   isAudioOn
                     ? 'bg-gray-700/80 text-white hover:bg-gray-600'
@@ -167,6 +164,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
               <button
                 onClick={() => setIsVideoOn(!isVideoOn)}
+                id="video-toggle-button"
                 className={`p-3 rounded-full transition-all duration-200 transform hover:scale-110 ${
                   isVideoOn
                     ? 'bg-gray-700/80 text-white hover:bg-gray-600'
@@ -250,8 +248,8 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
               </h3>
             </div>
 
-            <div className="flex-1 p-4 space-y-3 overflow-y-auto bg-gray-50">
-              {chatMessages.map((msg, index) => (
+            <div className="flex-1 p-4 space-y-3 overflow-y-auto bg-gray-50" id="chat-container">
+              {(chatMessages || []).map((msg, index) => (
                 <div key={index} className={`rounded-xl p-3 shadow-sm ${
                   msg.sender === doctor.name
                     ? 'bg-blue-100 border-l-4 border-blue-500'
@@ -273,23 +271,23 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             </div>
 
             <div className="p-4 border-t border-gray-200 bg-white">
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={chatMessage}
-                  onChange={(e) => setChatMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                  placeholder="Type a message..."
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm shadow-sm"
-                />
-                <Button
-                  size="sm"
-                  onClick={sendMessage}
-                  className="bg-blue-600 hover:bg-blue-700 px-3"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
+              <form action="" id="chat-form-container">
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    placeholder="Type a message..."
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm shadow-sm"
+                  />
+                  <Button
+                    size="sm"
+                    onClick={sendMessage}
+                    id="chat-send-message-button"
+                    className="bg-blue-600 hover:bg-blue-700 px-3"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

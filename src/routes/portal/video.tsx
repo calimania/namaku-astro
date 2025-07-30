@@ -15,8 +15,6 @@ function VideoCallPage() {
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(['profile']) as UserProfile | undefined;
 
-  console.log({ profile })
-
   return (
     <MeetingRoom
       patient={patientData}
