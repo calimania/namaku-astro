@@ -12,6 +12,10 @@ type VideoClientProps ={
 /**
  * Provider interface for the video calls
  * Request a temp zoom validation token
+ *
+ * Client or patient screen, it uses no authentication except for the unique link for ease
+ * Waiting room and zoom ui interface to communicate with our coaches
+ *
  * @param props
  * @returns
  */
