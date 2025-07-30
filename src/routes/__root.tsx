@@ -101,7 +101,8 @@ function Component() {
 
 	const [activeTab, setActiveTab] = React.useState('home' as string);
 
-	const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  // Sidebar is collapsed (slim) by default
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
 	const store = data?.data?.[0] as Store;
 
@@ -151,27 +152,37 @@ function Component() {
 		}
 		: undefined;
 
-	return (
-		<div className={`h-screen flex overflow-hidden ${activeTab === 'video' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-			<Sidebar activeTab={activeTab} onTabChange={setActiveTab} profile={sidebarProfile} store={store} />
-			<div className="flex-1 flex flex-col overflow-hidden">
-				{activeTab !== 'video' && (
-					<Header
-						title={activeTab}
-						subtitle={getPageSubtitle(activeTab)}
-						onNewAppointment={() => { }}
-					/>
-				)}
-				<main className={`flex-1 overflow-y-auto ${activeTab === 'video' ? '' : 'p-6'}`}>
-					<Outlet />
-				</main>
-			</div>
-			<NewAppointmentModal
-				isOpen={isNewAppointmentModalOpen}
-				onClose={() => setIsNewAppointmentModalOpen(false)}
-				onSubmit={() => { }}
-			/>
-			<ReactQueryDevtools />
-		</div>
-	);
+  return (
+	<div className={`h-screen flex overflow-hidden ${activeTab === 'video' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+	  <Sidebar
+		activeTab={activeTab}
+		onTabChange={(tab) => {
+		  setActiveTab(tab);
+		  setSidebarOpen(false); // Collapse sidebar on tab click
+		}}
+		profile={sidebarProfile}
+		store={store}
+		isCollapsed={!sidebarOpen}
+		onToggle={() => setSidebarOpen((v) => !v)}
+	  />
+	  <div className="flex-1 flex flex-col overflow-hidden">
+		{activeTab !== 'video' && (
+		  <Header
+			title={activeTab}
+			subtitle={getPageSubtitle(activeTab)}
+			onNewAppointment={() => { }}
+		  />
+		)}
+		<main className={`flex-1 overflow-y-auto ${activeTab === 'video' ? '' : 'p-6'}`}>
+		  <Outlet />
+		</main>
+	  </div>
+	  <NewAppointmentModal
+		isOpen={isNewAppointmentModalOpen}
+		onClose={() => setIsNewAppointmentModalOpen(false)}
+		onSubmit={() => { }}
+	  />
+	  <ReactQueryDevtools />
+	</div>
+  );
 }
