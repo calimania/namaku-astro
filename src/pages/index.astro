@@ -18,5 +18,5 @@ const store = stores?.[0]?.data as any as Store;
 
 <Layout store={store} page={homepage}>
   <HomePage store={store} page={homepage} />
-  <Albums albums={homepage.albums as Album[]} store={store} />
+  <Albums albums={homepage?.albums as Album[]} store={store} />
 </Layout>

@@ -5,14 +5,19 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
-  # workflow_dispatch:
+  workflow_dispatch:
 
 env:
-  STRAPI_URL: ${{ secrets.STRAPI_URL }}
+  STRAPI_URL: ${{ secrets.PUBLIC_STRAPI_URL }}
   MARKKET_URL: ${{ secrets.MARKKET_URL }}
   MARKKETPLACE_URL: ${{ secrets.MARKKETPLACE_URL }}
   STORE_SLUG: ${{ secrets.STORE_SLUG }}
   PUBLIC_POSTHOG_KEY : ${{ secrets.PUBLIC_POSTHOG_KEY }}
+  PUBLIC_STORE_SLUG: ${{ secrets.STORE_SLUG }}
+  PUBLIC_STRAPI_URL: ${{ secrets.STRAPI_URL }}
+  PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+  PUBLIC_RANA_API: ${{ secrets.PUBLIC_RANA_API}}
+  PUBLIC_ZOOM_FEATURE_UNLOCK_CODE: ${{ secrets.PUBLIC_ZOOM_FEATURE_UNLOCK_CODE }}
 
 permissions:
   contents: write
@@ -23,8 +28,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug env
+        run: env | grep -E 'STRAPI|MARKKET|STORE|POSTHOG|RANA|ZOOM'
       - uses: actions/checkout@v3
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -45,14 +51,14 @@ jobs:
         with:
           path: ./dist
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main' ) || (github.event_name == 'workflow_dispatch')
-  #   permissions:
-  #     pages: write
-  #     id-token: write
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main' ) || (github.event_name == 'workflow_dispatch')
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
