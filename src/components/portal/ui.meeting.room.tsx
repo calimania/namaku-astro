@@ -13,9 +13,9 @@ import {
   IconUserCircle as User,
   IconSend as Send
 } from '@tabler/icons-react';
-import { Button } from './ui/Button';
-import { Avatar } from './ui/Avatar';
-import VideoClient from './ui/video.client';
+import { Button } from '../ui/Button';
+import { Avatar } from '../ui/Avatar';
+import VideoClient from '../ui/video.client';
 
 interface ChatMessage {
   sender: string;
@@ -35,6 +35,7 @@ interface MeetingRoomProps {
   };
   isDemo?: boolean;
   demoTimeLimit?: number; // in seconds
+  session_name: string;
   chatMessages?: ChatMessage[];
   onSendChat?: (msg: string) => void;
 }
@@ -52,7 +53,8 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
   isDemo = true,
   demoTimeLimit = 300, // 5 minutes
   chatMessages,
-  onSendChat
+  onSendChat,
+  session_name,
 }) => {
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [isAudioOn, setIsAudioOn] = useState(true);
@@ -127,7 +129,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
       {/* Main Video Area */}
       <div className="flex-1 flex relative">
-        <VideoClient role={1} />
+        <VideoClient role={1}  session_name={session_name} />
 
         {/* Primary Video */}
         <div className="flex-1 relative bg-gray-800 flex items-center justify-center overflow-hidden" id="patient-video-container">
@@ -270,7 +272,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             </div>
 
             {/* Chat */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col min-h-0">
               <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
                 <h3 className="font-bold text-gray-900 flex items-center">
                   <MessageCircle className="w-4 h-4 mr-2 text-blue-600" />
@@ -278,7 +280,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 </h3>
               </div>
 
-              <div className="flex-1 p-4 space-y-3 overflow-y-auto bg-gray-50" id="chat-container">
+              <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3 bg-gray-50" id="chat-container">
                 {(chatMessages || []).map((msg, index) => (
                   <div key={index} className={`rounded-xl p-3 shadow-sm ${msg.sender === doctor.name
                     ? 'bg-blue-100 border-l-4 border-blue-500'
@@ -298,7 +300,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 ))}
               </div>
 
-              <div className="p-4 border-t border-gray-200 bg-white">
+              <div className="p-4 border-t border-gray-200 bg-white shrink-0 sticky bottom-0 z-10">
                 <form action="" id="chat-form-container">
                   <div className="flex space-x-2">
                     <input

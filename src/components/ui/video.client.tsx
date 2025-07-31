@@ -9,6 +9,7 @@ import type { VideoPlayer } from '@zoom/videosdk';
 
 type VideoClientProps ={
   role: number;
+  session_name: string;
 }
 
 /**
@@ -17,12 +18,9 @@ type VideoClientProps ={
  * @param props
  * @returns
  */
-const VideoRoom = ({ role }: VideoClientProps) => {
+const VideoRoom = ({ role, session_name }: VideoClientProps) => {
   const user_identity = 'provider';
   const router = useRouter();
-
-  const params = new URLSearchParams(window.location.search);
-  const session_name = params.get('session') || '';
 
   const attachVIdeo = (user, stream) => {
     if (user.displayName !== user_identity && user.bVideoOn) {
@@ -50,8 +48,18 @@ const VideoRoom = ({ role }: VideoClientProps) => {
     client.init('en-US', 'Global');
     const joined = await client.join(session_name, json.token, user_identity);
     const stream = client.getMediaStream();
-    await stream.startVideo();
-    await stream.startAudio();
+    try {
+      await stream.startVideo();
+    } catch (e) {
+      alert('Unable to start video. Please check your camera permissions.');
+      // Optionally, fallback UI or log error
+    }
+    try {
+      await stream.startAudio();
+    } catch (e) {
+      alert('Unable to start audio. Please check your microphone permissions.');
+      // Optionally, fallback UI or log error
+    }
 
     const chatClient = client.getChatClient();
     const renderChatHistory = async () => {
