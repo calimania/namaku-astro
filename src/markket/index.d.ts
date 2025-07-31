@@ -418,3 +418,12 @@ export interface VideoCall {
   startedAt?: Date;
   endedAt?: Date;
 }
+
+export interface UserProfile {
+  id: number;
+  username: string;
+  email: string;
+  displayName?: string;
+  bio?: string;
+  avatar?: { url: string };
+}
