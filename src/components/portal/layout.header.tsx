@@ -6,9 +6,10 @@ interface HeaderProps {
   title: string;
   subtitle?: string;
   onNewAppointment?: () => void;
+  children?: any;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, subtitle, onNewAppointment }) => {
+export const Header: React.FC<HeaderProps> = ({ title, subtitle, onNewAppointment, children }) => {
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -43,6 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, onNewAppointmen
           </div>
 
           <Button size="md" onClick={onNewAppointment}>New Appointment</Button>
+
+          {children}
         </div>
       </div>
     </header>

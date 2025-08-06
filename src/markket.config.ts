@@ -1,5 +1,5 @@
 export const markketplace = {
-  api: import.meta.env.STRAPI_URL || 'https://api.markket.place',
+  api: import.meta.env.PUBLIC_STRAPI_URL || 'https://api.markket.place',
   /** PUBLIC_RANA_API - Rest EHR extensions */
   ehr: import.meta.env.PUBLIC_RANA_API || 'https://api.namaku.us',
   store_slug: import.meta.env.STORE_SLUG || 'ehr',
@@ -8,7 +8,6 @@ export const markketplace = {
   url: import.meta.env.PUBLIC_URL || 'https://summit.caliman.org',
   portal: {
     slug: import.meta.env.PUBLIC_STORE_SLUG || 'namaku',
-    api: import.meta.env.PUBLIC_STRAPI_URL || 'https://api.markket.place',
     rest: import.meta.env.PUBLIC_MEDPLUM_URL || 'https://medplumapi.caliman.org/',
   },
   content: {
