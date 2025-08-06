@@ -6,7 +6,6 @@ import {
   IconDeviceTv as Video,
   IconChartBar as BarChart3,
   IconSettings as Settings,
-  IconMoodX as LogOut,
   IconVaccine as Stethoscope,
   IconClipboardData as About,
   IconChevronRight,
@@ -101,13 +100,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, profil
             </div>
           </div>
         )}
-        <button
-          onClick={() => { localStorage.removeItem('namaku.auth'); window.location.href = "/"; }}
-          className={`w-full flex items-center text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 ${isCollapsed ? 'justify-center p-3' : 'px-4 py-2'}`}
-        >
-          <LogOut className={`w-4 h-4 ${isCollapsed ? '' : 'mr-3'}`} />
-          {!isCollapsed && 'Sign out'}
-        </button>
       </div>
     </div>
   );

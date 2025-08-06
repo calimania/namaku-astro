@@ -9,12 +9,13 @@ import type { AstroGlobal } from 'astro'
 import { markketplace } from "../markket.config";
 import { type Store, type UserProfile } from '../markket/index.d';
 import { useQuery } from "@tanstack/react-query";
-import { IconLoader } from '@tabler/icons-react';
+import { IconLoader, IconSettings, IconMoodX } from '@tabler/icons-react';
 import * as React from 'react';
 
 import { Sidebar } from '../components/portal/layout.sidebar';
 import { Header } from '../components/portal/layout.header';
 import { NewAppointmentModal } from '../components/ui/AppointmentModal';
+import LogoutModal from '../components/ui/LogoutModal';
 
 export const Route = createRootRouteWithContext<{
 	astroContext: AstroGlobal | undefined,
@@ -76,12 +77,18 @@ const getPageSubtitle = (activeTab: string) => {
 
 function Component() {
 	const [isNewAppointmentModalOpen, setIsNewAppointmentModalOpen] = React.useState(false);
+	const [showLogoutModal, setShowLogoutModal] = React.useState(false);
+
+	React.useEffect(() => {
+		if (!getAuth()) {
+			window.location.href = '/auth';
+		}
+	}, []);
 
 	const { data, isLoading, error } = useQuery({
 		queryKey: ["store"],
 		queryFn: fetchStore,
 	});
-
 
 	const {
 		data: profile,
@@ -98,18 +105,21 @@ function Component() {
 		},
 	});
 
-
 	const [activeTab, setActiveTab] = React.useState('home' as string);
-
-  // Sidebar is collapsed (slim) by default
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
-
+	const [sidebarOpen, setSidebarOpen] = React.useState(false);
 	const store = data?.data?.[0] as Store;
-
 	error && console.warn({ error });
 
+	const sidebarProfile = profile
+		? {
+			username: profile?.username || '',
+			displayName: profile?.displayName || '',
+			bio: profile?.bio || '',
+			email: profile?.email || '',
+		}
+		: undefined;
 
-	if (isLoadingProfile) {
+	if (isLoadingProfile || isLoading) {
 		return (
 			<div className="h-screen w-screen flex items-center justify-center bg-gray-50">
 				<div className="flex flex-col items-center space-y-4">
@@ -142,46 +152,57 @@ function Component() {
 		);
 	}
 
-	// Normalize profile for Sidebar
-	const sidebarProfile = profile
-		? {
-			username: profile.username || '',
-			displayName: profile.displayName || '',
-			bio: profile.bio || '',
-			email: profile.email || '',
-		}
-		: undefined;
 
-  return (
-	<div className={`h-screen flex overflow-hidden ${activeTab === 'video' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-	  <Sidebar
-		activeTab={activeTab}
-		onTabChange={(tab) => {
-		  setActiveTab(tab);
-		  setSidebarOpen(false); // Collapse sidebar on tab click
-		}}
-		profile={sidebarProfile}
-		store={store}
-		isCollapsed={!sidebarOpen}
-		onToggle={() => setSidebarOpen((v) => !v)}
-	  />
+	return (
+		<div className={`h-screen flex overflow-hidden ${activeTab === 'video' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+			<Sidebar
+				activeTab={activeTab}
+				onTabChange={(tab) => {
+					setActiveTab(tab);
+					setSidebarOpen(false); // Collapse sidebar on tab click
+				}}
+				profile={sidebarProfile}
+				store={store}
+				isCollapsed={!sidebarOpen}
+				onToggle={() => setSidebarOpen((v) => !v)}
+			/>
 	  <div className="flex-1 flex flex-col overflow-hidden">
-		{activeTab !== 'video' && (
-		  <Header
-			title={activeTab}
-			subtitle={getPageSubtitle(activeTab)}
-			onNewAppointment={() => { }}
-		  />
-		)}
-		<main className={`flex-1 overflow-y-auto ${activeTab === 'video' ? '' : 'p-6'}`}>
-		  <Outlet />
-		</main>
+				{activeTab !== 'video' && (
+					<Header
+						title={activeTab}
+						subtitle={getPageSubtitle(activeTab)}
+						onNewAppointment={() => { }}
+					>
+						<button
+							className="mr-4 px-3 py-2 rounded-full bg-gray-100 hover:bg-blue-100 text-gray-500 hover:text-blue-600 transition-colors"
+							title="Settings"
+							onClick={() => setShowLogoutModal(true)}
+						>
+							<span className="sr-only">Settings</span>
+							<IconMoodX size={24} />
+						</button>
+					</Header>
+				)}
+				<main className={`flex-1 overflow-y-auto ${activeTab === 'video' ? '' : 'p-6'}`}>
+					<Outlet />
+				</main>
+				<div className="absolute bottom-0 left-0 w-full flex justify-center pb-4">
+					<button
+						className="px-3 py-2 rounded-full bg-gray-100 hover:bg-blue-100 text-gray-500 hover:text-blue-600 transition-colors"
+						title="Settings"
+						onClick={() => setShowLogoutModal(true)}
+					>
+						<span className="sr-only">Settings</span>
+						<IconSettings size={24} />
+					</button>
+				</div>
 	  </div>
 	  <NewAppointmentModal
-		isOpen={isNewAppointmentModalOpen}
-		onClose={() => setIsNewAppointmentModalOpen(false)}
-		onSubmit={() => { }}
-	  />
+				isOpen={isNewAppointmentModalOpen}
+				onClose={() => setIsNewAppointmentModalOpen(false)}
+				onSubmit={() => { }}
+			/>
+			<LogoutModal show={showLogoutModal} setShow={setShowLogoutModal} />
 	  <ReactQueryDevtools />
 	</div>
   );
